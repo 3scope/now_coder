@@ -8,7 +8,7 @@ func Backpack(weight, value []int, size int) int {
 	}
 
 	// Init.
-	for j := 0; j < number; j++ {
+	for j := 0; j < size; j++ {
 		if j < weight[0] {
 			dp[0][j] = 0
 		} else {
@@ -16,8 +16,8 @@ func Backpack(weight, value []int, size int) int {
 		}
 	}
 
-	for i := 0; i < size; i++ {
-		for j := 0; j < number; j++ {
+	for i := 1; i < number; i++ {
+		for j := 0; j < size; j++ {
 			if j-weight[i] < 0 {
 				dp[i][j] = dp[i-1][j]
 			} else {
@@ -25,7 +25,7 @@ func Backpack(weight, value []int, size int) int {
 			}
 		}
 	}
-	return dp[size-1][number-1]
+	return dp[number-1][size-1]
 }
 
 func max(x, y int) int {
@@ -38,9 +38,9 @@ func max(x, y int) int {
 
 func RollingArray(weight, value []int, size int) int {
 	number := len(weight)
-	dp := make([]int, number)
+	dp := make([]int, size)
 
-	for j := 0; j < number; j++ {
+	for j := 0; j < size; j++ {
 		if j < weight[0] {
 			dp[j] = 0
 		} else {
@@ -48,13 +48,13 @@ func RollingArray(weight, value []int, size int) int {
 		}
 	}
 
-	for i := 0; i < size; i++ {
-		for j := 0; j < number; j++ {
+	for i := 1; i < number; i++ {
+		for j := size - 1; j >= 0; j-- {
 			if j-weight[i] >= 0 {
 				dp[j] = max(dp[j], dp[j-weight[i]]+weight[i])
 			}
 		}
 	}
 
-	return dp[number-1]
+	return dp[size-1]
 }

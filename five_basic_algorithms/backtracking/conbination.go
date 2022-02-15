@@ -11,9 +11,13 @@ func (r *Result) Conbination(size, k, start int) {
 		return
 	}
 	// Pruning.
-	// 需要确定i最多到多少，才能满足有k个，因此，将循环条件i < size更改为i < n - (k - len(r.Temp)) + 1
+	// 需要确定i最多到多少，才能满足有k个，因此，将循环条件i < size更改为i < size - (k - len(r.Temp)) + 1
 	// 															|<-- k-len() -->|
 	//													i最多取值取到这里		size
+	// 剪枝可以有两种方法，一种是更改循环条件，另一个种是多一个"if"判断。
+	// if len(r.Temp)+size-start+1 < k {
+	// 	return
+	// }
 	for i := start; i < size; i++ {
 		// Deal with subset in this level.
 		r.Temp = append(r.Temp, i)
