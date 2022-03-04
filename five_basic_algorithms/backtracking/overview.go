@@ -21,6 +21,13 @@ package backtracking
  * 3. 单层递归处理逻辑。
  */
 
+/*
+ * 关于递归中是否需要返回值的问题，以有关树的问题举例：
+ * 1. 如果要搜索树中**一条**符合条件的路径，那么递归一定需要返回值，因为遇到符合条件的路径了就要及时返回（LeetCode 112）。
+ * 2. 如果需要搜索整棵树且无须处理返回值，那么递归函数就不需要返回值（LeetCode 113）。
+ * 3. 如果需要搜索整棵树且需要处理返回值，那么递归函数就需要返回值（LeetCode 236）。
+ */
+
 // Generic code template.
 func Backtracking() {
 	// Termination condition.
