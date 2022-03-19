@@ -18,7 +18,7 @@ func (r *Result) Conbination(size, k, start int) {
 	// if len(r.Temp)+size-start+1 < k {
 	// 	return
 	// }
-	for i := start; i < size; i++ {
+	for i := start; i <= size; i++ {
 		// Deal with subset in this level.
 		r.Temp = append(r.Temp, i)
 		// Recursive function.
