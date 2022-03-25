@@ -1,2 +1,5 @@
 # The macOS default folder.
 .DS_Store
+
+# VSCode folder.
+.vscode

@@ -15,7 +15,7 @@ func (r *Result) Conbination(size, k, start int) {
 	// 															|<-- k-len() -->|
 	//													i最多取值取到这里		size
 	// 剪枝可以有两种方法，一种是更改循环条件，另一个种是多一个"if"判断。
-	// if len(r.Temp)+size-start+1 < k {
+	// if len(r.Temp)+(size-start+1) < k {
 	// 	return
 	// }
 	for i := start; i <= size; i++ {
