@@ -18,6 +18,7 @@ func mergeSortList(head *ListNode) *ListNode {
 	}
 	left := head
 	right := slow.Next
+	// Divide it into two list.
 	slow.Next = nil
 
 	left = mergeSortList(left)

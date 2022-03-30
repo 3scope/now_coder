@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sort"
 )
 
@@ -37,16 +36,4 @@ func Solution(total int, dif []int) int {
 
 	result += 3 - (total+result)%3
 	return result
-}
-
-func main() {
-	total := 0
-	fmt.Scan(&total)
-
-	dif := make([]int, total)
-	for i := 0; i < total; i++ {
-		fmt.Scan(&dif[i])
-	}
-
-	fmt.Println(Solution(total, dif))
 }
