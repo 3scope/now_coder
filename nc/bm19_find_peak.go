@@ -1,6 +1,6 @@
 package main
 
-// When use greedy algorithm, it will not treat
+// When use greedy algorithm, it will not treat.
 
 // func findPeakElement(nums []int) int {
 // 	// write code here
