@@ -1,39 +1,31 @@
 package main
 
-import (
-	"bufio"
-	"fmt"
-	"os"
-	"strconv"
-	"strings"
-)
+// func main() {
+// 	count, target := 0, 0
+// 	fmt.Scanf("%d %d\n", &count, &target)
+// 	input := bufio.NewScanner(os.Stdin)
+// 	input.Scan()
+// 	numsStr := strings.Split(input.Text(), " ")
+// 	nums := make([]int, len(numsStr))
+// 	for i := 0; i < len(nums); i++ {
+// 		nums[i], _ = strconv.Atoi(numsStr[i])
+// 	}
+// 	targetSlice := make([]int, 14)
+// 	for i := 13; i >= 0; i-- {
+// 		bit := target >> i & 1
+// 		targetSlice[i] = bit
+// 	}
 
-func main() {
-	count, target := 0, 0
-	fmt.Scanf("%d %d\n", &count, &target)
-	input := bufio.NewScanner(os.Stdin)
-	input.Scan()
-	numsStr := strings.Split(input.Text(), " ")
-	nums := make([]int, len(numsStr))
-	for i := 0; i < len(nums); i++ {
-		nums[i], _ = strconv.Atoi(numsStr[i])
-	}
-	targetSlice := make([]int, 14)
-	for i := 13; i >= 0; i-- {
-		bit := target >> i & 1
-		targetSlice[i] = bit
-	}
-
-	result := 0
-	root := &Trie{
-		Next: make(map[int]*Trie),
-	}
-	for i := 1; i < len(nums); i++ {
-		root.Insert(nums[i-1])
-		result += root.IsGreaterThan(nums[i], targetSlice)
-	}
-	fmt.Println(result)
-}
+// 	result := 0
+// 	root := &Trie{
+// 		Next: make(map[int]*Trie),
+// 	}
+// 	for i := 1; i < len(nums); i++ {
+// 		root.Insert(nums[i-1])
+// 		result += root.IsGreaterThan(nums[i], targetSlice)
+// 	}
+// 	fmt.Println(result)
+// }
 
 type Trie struct {
 	IsEnd bool

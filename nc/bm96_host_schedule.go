@@ -7,11 +7,13 @@ func minmumNumberOfHost(n int, startEnd [][]int) int {
 	count := make(map[int]int)
 	// The count of host only increases at the start time, only decreases at the end.
 	for i := 0; i < len(startEnd); i++ {
+		// Increase at the begin time.
 		count[startEnd[i][0]]++
+		// Decrease at the end time.
 		count[startEnd[i][1]]--
 	}
 
-	// Sort the count.
+	// Sort the count by times.
 	keys := make([]int, 0, len(count))
 	for key := range count {
 		keys = append(keys, key)

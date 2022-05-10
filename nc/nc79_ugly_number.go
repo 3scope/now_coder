@@ -16,7 +16,8 @@ func GetUglyNumber_Solution(index int) int {
 			return x
 		}
 	}
-	// Every element
+	// Every element.
+	// Generate a ugly number use "*2 / *3 / *5"
 	for i := 1; i < index; i++ {
 		next := min(min(uglyNumber[p1]*2, uglyNumber[p2]*3), uglyNumber[p3]*5)
 		uglyNumber = append(uglyNumber, next)

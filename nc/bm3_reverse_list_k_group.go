@@ -38,18 +38,18 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	return newHead.Next
 }
 
-// func main() {
-// 	nodeArray := []int{
-// 		1, 2, 3, 4, 5,
-// 	}
-// 	nodeList := make([]*ListNode, len(nodeArray))
-// 	k := 3
-// 	for i := 0; i < len(nodeArray); i++ {
-// 		nodeList[i] = &ListNode{nodeArray[i], nil}
-// 	}
+func main() {
+	nodeArray := []int{
+		1, 2, 3, 4, 5,
+	}
+	nodeList := make([]*ListNode, len(nodeArray))
+	k := 3
+	for i := 0; i < len(nodeArray); i++ {
+		nodeList[i] = &ListNode{nodeArray[i], nil}
+	}
 
-// 	for i := 0; i < len(nodeList)-1; i++ {
-// 		nodeList[i].Next = nodeList[i+1]
-// 	}
-// 	reverseKGroup(nodeList[0], k)
-// }
+	for i := 0; i < len(nodeList)-1; i++ {
+		nodeList[i].Next = nodeList[i+1]
+	}
+	reverseKGroup(nodeList[0], k)
+}

@@ -1,5 +1,6 @@
 package main
 
+// Backtracking + dfs + memoization.
 func solveGrid(grid [][]byte) int {
 	// write code here
 	count := 0
@@ -7,7 +8,7 @@ func solveGrid(grid [][]byte) int {
 		for j := 0; j < len(grid[i]); j++ {
 			if grid[i][j] == '1' {
 				count++
-				bfsSolve(grid, i, j)
+				dfsSolve(grid, i, j)
 			}
 		}
 	}
@@ -16,15 +17,15 @@ func solveGrid(grid [][]byte) int {
 }
 
 // Each time use bfs function, it turn one island gone.
-func bfsSolve(grid [][]byte, row, column int) {
+func dfsSolve(grid [][]byte, row, column int) {
 	if row < 0 || row >= len(grid) || column < 0 || column >= len(grid[row]) || grid[row][column] == '0' {
 		return
 	}
 
 	grid[row][column] = '0'
 	// Recursion.
-	bfsSolve(grid, row-1, column)
-	bfsSolve(grid, row+1, column)
-	bfsSolve(grid, row, column+1)
-	bfsSolve(grid, row, column-1)
+	dfsSolve(grid, row-1, column)
+	dfsSolve(grid, row+1, column)
+	dfsSolve(grid, row, column+1)
+	dfsSolve(grid, row, column-1)
 }
