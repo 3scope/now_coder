@@ -1,6 +1,6 @@
 package main
 
-// The pre is the head node of the reverse interval.
+// 翻转“k”个节点，成功翻转返回“true”，不足“k”个节点返回“false”。
 func reverseKNode(pre, cur *ListNode, k int) bool {
 	for i := 1; i < k; i++ {
 		if cur == nil || cur.Next == nil {
@@ -15,23 +15,24 @@ func reverseKNode(pre, cur *ListNode, k int) bool {
 }
 
 func reverseKGroup(head *ListNode, k int) *ListNode {
-	// write code here
+	// 如果“k”为1，相当于不进行翻转。
 	if k == 1 {
 		return head
 	}
 	newHead := new(ListNode)
 	newHead.Next = head
-
+	// 从第一组开始翻转。
 	pre := newHead
 	cur := head
 
 	for reverseKNode(pre, cur, k) {
+		// 每次成功翻转后，需要重新定位。
 		for i := 0; i < k; i++ {
 			pre = pre.Next
 		}
 		cur = pre.Next
 	}
-	// When there is no left k nodes, the rest is revesed, so it should reverse again.
+	// 最后一次翻转失败的话，需要重新翻转回来。
 	cur = pre.Next
 	reverseKNode(pre, cur, k)
 

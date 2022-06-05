@@ -17,13 +17,14 @@ func LFU(operators [][]int, k int) []int {
 
 type LFUCache struct {
 	Capacity int
-	// Use key to get value.
+	// 存放键值对。
 	KeyValue map[int]int
-	// Use key to get times.
+	// 通过“key”可以得到访问次数。
 	KeyTimes map[int]int
-	// Use times to get key set.
+	// 通过访问次数可以得到相同次数的“key”。
 	TimesKeySet map[int][]int
-	MinTimes    int
+	// 存放最少的访问次数。
+	MinTimes int
 }
 
 func LFUFactory(cap int) *LFUCache {
@@ -31,7 +32,7 @@ func LFUFactory(cap int) *LFUCache {
 		Capacity: cap,
 		KeyValue: make(map[int]int),
 		KeyTimes: make(map[int]int),
-		// Sort by time when put it in.
+		// 有很多相同访问次数的“key”，它们按照时间顺序排列。
 		TimesKeySet: map[int][]int{},
 		MinTimes:    0,
 	}
@@ -40,7 +41,7 @@ func LFUFactory(cap int) *LFUCache {
 func (this *LFUCache) Get(key int) int {
 	value, ok := this.KeyValue[key]
 	if ok {
-		// Increase one time of the key.
+		// 需要增加相应的访问次数。
 		this.IncreaseTimes(key)
 		return value
 	} else {
@@ -53,6 +54,7 @@ func (this *LFUCache) IncreaseTimes(key int) {
 	newTimes := this.KeyTimes[key]
 	oldTimes := newTimes - 1
 
+	// 判断需要增加访问次数的页面，是否是第一次访问的新页面，如果是的话，就不会在“TimesKeySet”中找到对应的下标。
 	index := -1
 	for i := 0; i < len(this.TimesKeySet[oldTimes]); i++ {
 		if this.TimesKeySet[oldTimes][i] == key {
@@ -60,13 +62,13 @@ func (this *LFUCache) IncreaseTimes(key int) {
 			break
 		}
 	}
-	// Delete key in the original set.
+	// 从原来的集合中删除。
 	if index != -1 {
 		this.TimesKeySet[oldTimes] = append(this.TimesKeySet[oldTimes][:index], this.TimesKeySet[oldTimes][index+1:]...)
 	}
-	// Add key to new one.
+	// 加入到新的集合。
 	this.TimesKeySet[newTimes] = append(this.TimesKeySet[newTimes], key)
-	// When the old one is empty.
+	// 如果原有的集合空了，并且“key”是最小的“times”，那么需要更新“times”的值。
 	if len(this.TimesKeySet[oldTimes]) == 0 {
 		if oldTimes == this.MinTimes {
 			this.MinTimes++
@@ -75,23 +77,24 @@ func (this *LFUCache) IncreaseTimes(key int) {
 }
 
 func (this *LFUCache) Set(key, value int) {
-	// If key is existed.
+	// 如果“key”存在，那么修改值，并且访问次数加一。
 	if _, ok := this.KeyValue[key]; ok {
 		this.KeyValue[key] = value
 		this.IncreaseTimes(key)
 		return
 	}
-
+	// 如果不存在，那么根据容量判断是否需要淘汰页面。
 	if this.Capacity > 0 {
 		this.KeyValue[key] = value
 		this.IncreaseTimes(key)
 		this.Capacity--
 	} else {
+		// 此时还没有更新“MinTimes”，因此会淘汰原有的页面。
 		this.RemoveMinTimes()
 		this.KeyValue[key] = value
 		this.IncreaseTimes(key)
 	}
-	// No key in any set.
+	// 因为不存在，所以最少访问次数一定是1。
 	this.MinTimes = 1
 }
 

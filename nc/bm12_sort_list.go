@@ -5,12 +5,13 @@ func sortInList(head *ListNode) *ListNode {
 	return mergeSortList(head)
 }
 
+// 参考归并排序的思想。
 func mergeSortList(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
 
-	// Prevent an infinite loop of two nodes.
+	// 遍历得到链表的中点。
 	slow, fast := head, head.Next
 	for fast != nil && fast.Next != nil {
 		fast = fast.Next.Next
@@ -18,13 +19,13 @@ func mergeSortList(head *ListNode) *ListNode {
 	}
 	left := head
 	right := slow.Next
-	// Divide it into two list.
+	// 分割成两个链表。
 	slow.Next = nil
 
+	// 进行归并。
 	left = mergeSortList(left)
 	right = mergeSortList(right)
-
-	// Merge two lists.
+	// 合并两个链表。
 	newHead := new(ListNode)
 	cur := newHead
 	for left != nil && right != nil {

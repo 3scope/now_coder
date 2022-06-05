@@ -6,6 +6,7 @@ func isPail(head *ListNode) bool {
 		return true
 	}
 
+	// 找中点，需要使用快慢指针，将“fast”初始化到“slow”后一个可以保证慢指针出现在前半段。
 	slow, fast := head, head.Next
 	stack := make([]*ListNode, 1)
 	stack[0] = slow
@@ -15,7 +16,7 @@ func isPail(head *ListNode) bool {
 		stack = append(stack, slow)
 	}
 
-	// When the node count is odd, the middle node should be deleted.
+	// 当最后“fast”指针指向“nil”时，“slow”指针刚好位于中间位置，那么此时中间位置不需要进行比较，直接删除。
 	if fast == nil {
 		stack = stack[:len(stack)-1]
 	}

@@ -1,24 +1,25 @@
 package main
 
+// 二分查找的本质是找一个中间值，保证每次可以去除多个错误答案。
 func Find(target int, array [][]int) bool {
-	// write code here
-	row := len(array)
-	if row == 0 {
+	// 特殊情况。
+	if len(array) == 0 {
 		return false
 	}
-	column := len(array[0])
-	// The element of the right top is the middle, because the left of it smaller than it, and buttom of it bigger than it.
-	// Middle.
-	pos := []int{0, column - 1}
-	for pos[0] < row && pos[1] >= 0 {
-		if array[pos[0]][pos[1]] == target {
+	rows := len(array)
+	columns := len(array[0])
+	// 从数组的右上角出发，左边的数比它小，右边的数比它大。
+	middle := [2]int{0, columns - 1}
+	for middle[0] < rows && middle[1] >= 0 {
+		element := array[middle[0]][middle[1]]
+		if element == target {
 			return true
-		} else if array[pos[0]][pos[1]] > target {
-			pos[1]--
-		} else {
-			pos[0]++
+		} else if element > target {
+			middle[1]--
+		} else if element < target {
 		}
+		middle[0]++
 	}
-
+	// 没有找到则表明不存在。
 	return false
 }

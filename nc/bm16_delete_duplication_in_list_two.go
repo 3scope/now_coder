@@ -1,24 +1,23 @@
 package main
 
 func deleteDuplicatesTwo(head *ListNode) *ListNode {
-	// write code here
 	newHead := new(ListNode)
 	newHead.Next = head
+	// "pre"指针指向需要保留节点中的最后一个节点。
 	pre := newHead
 	cur := head
 
-	dupValue := 0
 	for cur != nil && cur.Next != nil {
-		// The "cur" pointer to the last element of duplicates.
+		// 如果出现重复的情况，需要考虑删除。
 		if cur.Val == cur.Next.Val {
-			// Delete all the nodes.
-			dupValue = cur.Val
-			for cur.Next != nil && cur.Next.Val == dupValue {
+			// 找到最后一个重复值。
+			for cur.Next != nil && cur.Val == cur.Next.Val {
 				cur = cur.Next
 			}
 			pre.Next = cur.Next
 			cur = cur.Next
 		} else {
+			// 没有出现重复，保留当前节点。
 			pre = cur
 			cur = cur.Next
 		}

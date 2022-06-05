@@ -1,11 +1,10 @@
 package main
 
 type Solution struct {
-	// write code here
 	Capacity int
 	Head     *DoubleListNode
 	Tail     *DoubleListNode
-	// Use for get method
+	// “Get”方法的时间复制度要求是 O(1)，因此使用一个键值对存储。
 	KeyNode map[int]*DoubleListNode
 }
 
@@ -17,7 +16,6 @@ type DoubleListNode struct {
 }
 
 func Constructor(capacity int) Solution {
-	// write code here
 	solution := Solution{
 		Capacity: capacity,
 		Head: &DoubleListNode{
@@ -26,7 +24,7 @@ func Constructor(capacity int) Solution {
 		},
 		KeyNode: make(map[int]*DoubleListNode),
 	}
-	// Circular linked list.
+	// 使用一个环形双链表，初始时只有一个节点。
 	solution.Tail = solution.Head
 	solution.Head.Next = solution.Tail
 	solution.Tail.Pre = solution.Head
@@ -41,7 +39,6 @@ func (this *Solution) insertAfterHead(key, value int) {
 		Pre:   this.Head,
 		Next:  this.Head.Next,
 	}
-	// If use head node and tail node, the next of head is always exists.
 	this.Head.Next.Pre = node
 	this.Head.Next = node
 	this.KeyNode[key] = node
@@ -65,6 +62,7 @@ func (this *Solution) get(key int) int {
 		return -1
 	}
 
+	// 首先通过“map”快速得到对应的节点，之后将将节点从链表上删除，再插入到头节点后面。
 	pre := node.Pre
 	next := node.Next
 	node.Pre = nil
@@ -77,19 +75,12 @@ func (this *Solution) get(key int) int {
 }
 
 func (this *Solution) set(key int, value int) {
-	// write code here
 	if this.Capacity > 0 {
 		this.Capacity--
 		this.insertAfterHead(key, value)
 	} else {
+		// 空间不够的话，需要先删除尾部的节点。
 		this.deleteFromTail()
 		this.insertAfterHead(key, value)
 	}
 }
-
-/**
-* Your Solution object will be instantiated and called as such:
-* solution := Constructor(capacity);
-* output := solution.get(key);
-* solution.set(key,value);
- */

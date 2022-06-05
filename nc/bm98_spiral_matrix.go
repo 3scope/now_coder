@@ -1,11 +1,10 @@
 package main
 
 func spiralOrder(matrix [][]int) []int {
-	// write code here
 	if matrix == nil {
 		return nil
 	}
-	// The four corners.
+	// 将左上角和右下角的点不断向中间逼近，之后按照顺时针的方向获得结果。
 	row := len(matrix)
 	column := len(matrix[0])
 	leftTop := []int{0, 0}
@@ -13,30 +12,30 @@ func spiralOrder(matrix [][]int) []int {
 
 	result := make([]int, 0, row*column)
 	for leftTop[0] < rightBottom[0] && leftTop[1] < rightBottom[1] {
-		// Top edge.
-		// Begin with left and end with right.
+		// 上面的边，保证遍历区间的左闭右开。
 		for j := leftTop[1]; j < rightBottom[1]; j++ {
 			result = append(result, matrix[leftTop[0]][j])
 		}
-		// Right edge.
+		// 右边的边。
 		for j := leftTop[0]; j < rightBottom[0]; j++ {
 			result = append(result, matrix[j][rightBottom[1]])
 		}
-		// Bottom edge.
+		// 下面的边。
 		for j := rightBottom[1]; j > leftTop[1]; j-- {
 			result = append(result, matrix[rightBottom[0]][j])
 		}
-		// Left edge.
+		// 左边的边。
 		for j := rightBottom[0]; j > leftTop[0]; j-- {
 			result = append(result, matrix[j][leftTop[1]])
 		}
+		// 将左上角和右下角的点不断向中间逼近。
 		leftTop[0]++
 		leftTop[1]++
 		rightBottom[0]--
 		rightBottom[1]--
 	}
 
-	// When the one of row and column is odd, special handling required.
+	// 当矩阵短的那条边是奇数的时候，需要特殊处理。
 	min := func(x, y int) int {
 		if x > y {
 			return y
@@ -46,7 +45,7 @@ func spiralOrder(matrix [][]int) []int {
 	}
 
 	if min(row, column)%2 == 1 {
-		// If row number is equal.
+		// 如果行数相等，证明矩阵的行数“rows”比“columns”要短，因此最后按照从左到右的顺序处理中间一行。
 		if leftTop[0] == rightBottom[0] {
 			for j := leftTop[1]; j <= rightBottom[1]; j++ {
 				result = append(result, matrix[leftTop[0]][j])

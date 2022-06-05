@@ -1,10 +1,11 @@
 package main
 
 func reverseBetween(head *ListNode, m int, n int) *ListNode {
-	// write code here
+	// 建立新的头节点。
 	newHead := new(ListNode)
 	newHead.Next = head
 
+	// 定位对应的位置，“pre”指向第一个需要翻转节点的前驱，“cur”指向第一个需要翻转的节点。
 	var pre, cur *ListNode
 	pre = newHead
 	cur = head
@@ -13,12 +14,12 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 		cur = cur.Next
 	}
 
-	// Insert to the head.
-	// The pre pointer is the head pointer of the list which should be reverse.
-	// The cur pointer is the tail pointer of the list which is reversed.
+	// 使用头插法，“cur”节点是尾节点。
 	for i := m; i < n; i++ {
+		// “temp”存储需要翻转的节点。
 		temp := cur.Next
 		cur.Next = temp.Next
+		// 头插法。
 		temp.Next = pre.Next
 		pre.Next = temp
 	}

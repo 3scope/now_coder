@@ -12,6 +12,7 @@ func addInList(head1 *ListNode, head2 *ListNode) *ListNode {
 		stack2 = append(stack2, node)
 	}
 
+	// 头插法生成一个新的链表。
 	newHead := new(ListNode)
 	carry := 0
 	for len(stack1) != 0 && len(stack2) != 0 {

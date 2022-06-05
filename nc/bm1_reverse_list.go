@@ -6,7 +6,7 @@ type ListNode struct {
 }
 
 func ReverseList(pHead *ListNode) *ListNode {
-	// write code here
+	// 特殊情况。
 	if pHead == nil || pHead.Next == nil {
 		return pHead
 	}
@@ -15,8 +15,9 @@ func ReverseList(pHead *ListNode) *ListNode {
 	pre = nil
 	cur = pHead
 	for cur != nil {
-		// Use temp to store the next pointer of current.
+		// 使用临时变量存储“Next”指针。
 		temp := cur.Next
+		// 翻转链表。
 		cur.Next = pre
 		pre = cur
 		cur = temp

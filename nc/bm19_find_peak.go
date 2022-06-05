@@ -1,42 +1,25 @@
 package main
 
-// When use greedy algorithm, it will not treat.
-
-// func findPeakElement(nums []int) int {
-// 	// write code here
-// 	if len(nums) == 1 {
-// 		return 0
-// 	}
-
-// 	preDifference := nums[1] - nums[0]
-// 	curDifference := 0
-// 	result := 0
-// 	if nums[1] > nums[0] {
-// 		result = 1
-// 	}
-// 	for i := 2; i < len(nums); i++ {
-// 		curDifference = nums[i] - nums[i-1]
-// 		if curDifference > 0 && preDifference <= 0 || curDifference < 0 && preDifference >= 0 {
-// 			return i - 1
-// 		}
-// 	}
-
-// 	return result
-// }
-
-func findPeakElementBinarySearch(nums []int) int {
+// 峰值要求严格大于左右元素，并且当只有一个元素的时候，就是峰值。
+func findPeakElement(nums []int) int {
+	// 使用左闭右闭区间，每次比较“middle”所在的元素和右边的一个元素。
+	// 因为每次都向下取整，那么只要“left”和“right”不相等，“middle+1”永远是合法的。
 	left := 0
 	right := len(nums) - 1
+	middle := (left + right) / 2
+	// 只有可能的区间只有一个元素的话，那么直接确定是山峰。
 	for left < right {
-		middle := (left + right) / 2
-		// Middle is not the peak.
-		if nums[middle] < nums[middle+1] {
+		if nums[middle] > nums[middle+1] {
+			// 右边是下坡，山峰在左边，并且“middle”有可能是山峰。
+			right = middle
+		} else if nums[middle] < nums[middle+1] {
+			// 右边是上坡，山峰在右边，并且“middle”不可能是山峰。
 			left = middle + 1
 		} else {
-			// If middle equals to middle + 1 or more than middle + 1, than it may be the peak.
-			right = middle
+			// "middle"不可能是山峰，因为峰值要求严格大于左右元素。
+			left = middle + 1
 		}
+		middle = (left + right) / 2
 	}
-
-	return right
+	return middle
 }
