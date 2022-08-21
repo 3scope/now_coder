@@ -5,7 +5,7 @@ func maxLength(arr []int) int {
 		return 0
 	}
 
-	// 用于判断当前窗口中是否已有相应的数字。
+	// 用于判断当前中是否已有相应的数字。
 	dedup := make(map[int]bool)
 	left, right := 0, 0
 	result := 0

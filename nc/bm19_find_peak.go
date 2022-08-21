@@ -7,7 +7,7 @@ func findPeakElement(nums []int) int {
 	left := 0
 	right := len(nums) - 1
 	middle := (left + right) / 2
-	// 只有可能的区间只有一个元素的话，那么直接确定是山峰。
+	// 可能的区间只有一个元素的话，那么直接确定是山峰。
 	for left < right {
 		if nums[middle] > nums[middle+1] {
 			// 右边是下坡，山峰在左边，并且“middle”有可能是山峰。
